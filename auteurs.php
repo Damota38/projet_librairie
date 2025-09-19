@@ -59,16 +59,16 @@ if ($_GET['delete'] ?? false) {
 }
 
 $whereClause = "";
-$param =[];
+$params = [];
 
 if ($search) {
 
     $whereClause = "WHERE nom LIKE ? OR prenom LIKE ? OR nationalite LIKE ?";
 
     $params = [
-        "%search%",
-        "%search%",
-        "%search%",
+        "%$search%",
+        "%$search%",
+        "%$search%"
     ];
 }
 
@@ -86,7 +86,7 @@ $stmt->execute($params);
 
 $auteurs = $stmt->fetchAll();
 
-$editAuteurs = null;
+$editAuteur = null;
 
 if ($_GET['edit'] ?? false) {
 
@@ -253,7 +253,6 @@ if ($_GET['edit'] ?? false) {
                 <!-- urlencode() : encode les caractères spéciaux pour l'URL -->
                 <!-- Si recherche active, ajoute &search=terme à l'URL -->
                 <a href="?page=<?= $i ?><?= $search ? '&search=' . urlencode($search) : '' ?>"
-                   <!-- Ajoute la classe 'current' si c'est la page active -->
                    class="<?= $i == $page ? 'current' : '' ?>"><?= $i ?></a>
             <?php endfor; ?>
         </div>
